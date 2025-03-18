@@ -21,7 +21,10 @@
         }
       }
     </script>
-
+    <div class="visitor-counter">
+      <div class="counter-icon"><i class="ri-user-line"></i></div>
+      <div class="counter-text">Besucher: <span id="visitor-count">0</span></div>
+    </div>
     <audio id="bg-music" controls autoplay>
       <source src="assets/audio/music.mp3" type="audio/mpeg">
       Ihr Browser kann dieses Tondokument nicht wiedergeben.<br>
@@ -322,6 +325,18 @@
         }
       });
     </script>
-  
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        let visitCount = localStorage.getItem('visitCount') || 0;
+        
+        if (sessionStorage.getItem('counted') !== 'true') {
+          visitCount = parseInt(visitCount) + 1;
+          localStorage.setItem('visitCount', visitCount);
+          sessionStorage.setItem('counted', 'true');
+        }
+        
+        document.getElementById('visitor-count').textContent = visitCount;
+      });
+    </script>
   </body>
 </html>
