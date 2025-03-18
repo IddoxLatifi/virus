@@ -168,7 +168,6 @@
         justify-content: center;
       }
 
-      /* Überschrift in RGB, p-Text weiß */
       .section h2 {
         animation: rgbText 3s infinite;
       }
@@ -183,7 +182,6 @@
         animation: none;
       }
 
-      /* Sidebar in Lila */
       .tech-sidebar {
         position: fixed;
         left: 0;
@@ -221,7 +219,6 @@
         display: none;
       }
 
-      /* TicTacToe Standard-Styles (werden unten überschrieben/ergänzt) */
       #tic-tac-toe {
         position: absolute;
         right: 20px;
@@ -246,7 +243,6 @@
         cursor: pointer;
       }
 
-      /* Gewinner-Nachricht */
       #ttt-message {
         position: absolute;
         left: 50%;
@@ -271,8 +267,6 @@
       class="fixed inset-0 overflow-hidden pointer-events-none"
       style="z-index:1;"
     ></div>
-
-    <!-- Sidebar -->
     <div class="tech-sidebar">
       <h3 class="text-xl font-bold mb-2">My Techs</h3>
       <div class="tech-icons">
@@ -284,22 +278,17 @@
       </div>
     </div>
 
-
-    <!-- Container für TicTacToe -->
     <div id="tic-container">
       <p id="ttt-notice">
         Try to hit my Tic-Tac-Toe System, i bet you never beat them :P
       </p>
       <div id="ttt-scoreboard">X: 0 | O: 0</div>
-
-      <!-- TTT-Feld + Meldung -->
       <div id="tic-tac-toe"></div>
       <div id="ttt-message"></div>
       <div id="ttt-message" style="display:none;"></div>
     </div>
 
     <div class="content-container">
-      <!-- Über mich -->
       <div class="section">
         <h2 class="text-3xl font-bold mb-4">Über mich</h2>
         <p class="text-lg">
@@ -310,8 +299,6 @@
           <a href="https://iddox.tech/contact.html">Just write to me</a> if you're interested in something unique; we're sure to find a solution!
         </p>
       </div>
-
-      <!-- Ping Pong Game -->
       <div
         class="relative bg-black rounded-lg shadow-lg overflow-hidden"
         style="height: 400px"
@@ -327,8 +314,6 @@
         <div class="absolute right-4 w-4 h-20" id="paddle2"></div>
         <div class="absolute w-4 h-4 rounded-full" id="ball"></div>
       </div>
-
-      <!-- Back Button -->
       <div class="fixed top-10 left-10">
         <button
           id="back-btn"
@@ -339,7 +324,6 @@
       </div>
     </div>
 
-    <!-- Ping Pong Script -->
     <script>
       let ball = document.getElementById("ball");
       let paddle1 = document.getElementById("paddle1");
@@ -423,8 +407,6 @@
         if (paddle1Pos < 0) paddle1Pos = 0;
         if (paddle1Pos > 80) paddle1Pos = 80;
       });
-
-      // KI (Bewegt sich einfach zum Ball)
       function moveBot() {
         if (ballPosY < paddle2Pos + 10) {
           paddle2Pos -= 0.8;
@@ -444,7 +426,6 @@
       gameLoop();
     </script>
 
-    <!-- Code-Snippet Effekt -->
     <script>
       function createCodeSnippet() {
         const snippet = document.createElement("div");
@@ -459,7 +440,6 @@
       setInterval(createCodeSnippet, 1000);
     </script>
 
-    <!-- Laser-Effekt -->
     <script>
       function createLaser() {
         const laser = document.createElement('div');
@@ -482,7 +462,6 @@
       setInterval(createLaser, 300);
     </script>
 
-    <!-- Alt-Code-Schnipsel -->
     <script>
       function createCodeSnippetAlt() {
         const snippets = [
@@ -519,16 +498,13 @@
       setInterval(createCodeSnippetAlt, 1500);
     </script>
 
-    <!-- Original TicTacToe Script -->
     <script>
-      // Minimal TicTacToe: User = 'X', Computer = 'O'
       const ticTacToeContainer = document.getElementById('tic-tac-toe');
       const tttMessage = document.getElementById('ttt-message');
       let ticCells = [];
       let board = Array(9).fill(null); // 3x3
       let currentPlayer = 'X'; // Start: Nutzer
 
-      // 9 Zellen erstellen
       for (let i = 0; i < 9; i++) {
         const cell = document.createElement('div');
         cell.classList.add('tic-cell');
@@ -537,7 +513,6 @@
         ticCells.push(cell);
       }
 
-      // Spielerzug (X)
       function handleTurn(idx) {
         if (board[idx] !== null || currentPlayer !== 'X') return;
         board[idx] = 'X';
@@ -546,11 +521,9 @@
         checkWin();
         currentPlayer = 'O';
 
-        // Computerzug mit leichter Verzögerung
         setTimeout(computerMove, 500);
       }
 
-      // Computerzug (O) - Minimax
       function computerMove() {
         if (board.includes(null)) {
           const moveIndex = bestMove();
@@ -662,60 +635,64 @@
       }
 
       function resetTicTacToe() {
-        board = Array(9).fill(null);
-        ticCells.forEach(cell => cell.textContent = '');
+      board = Array(9).fill(null);
+      ticCells.forEach(cell => cell.textContent = '');
+      if(startingMode === 'bot') {
+        currentPlayer = 'O';
+        setTimeout(computerMove, 500);
+      } else {
         currentPlayer = 'X';
       }
+    }
+
+    function startGame(mode) {
+      startingMode = mode;
+      resetTicTacToe();
+    }
+
+    startGame('human');
     </script>
 
-    <!-- Zusätzliche Anpassungen -->
     <style>
-      /* Container höher setzen (statt top:50%) => top:40%, transformY(-40%) */
       #tic-container {
         position: absolute;
         right: 20px;
-        top: 40%;            /* weiter oben */
-        transform: translateY(-40%);  /* passt zur top-Angabe */
+        top: 40%;           
+        transform: translateY(-40%);  
         width: 300px;
         background: rgba(0, 0, 0, 0.9);
         border: 2px solid #fff;
         padding: 10px;
         text-align: center;
       }
-
-      /* Tic-Tac-Toe Kästchen in Lila */
       #tic-container #tic-tac-toe .tic-cell {
         border: 1px solid purple !important;
         color: #ff0000; 
       }
 
-      /* Notiz (leicht geneigt, aber gut lesbar) */
       #ttt-notice {
         text-align: center;
         font-style: oblique;
-        transform: rotate(-2deg); /* Weniger stark geneigt */
+        transform: rotate(-2deg); 
         color: #fff;
         margin-bottom: 350px;
       }
 
-      /* Scoreboard etwas kleiner */
       #ttt-scoreboard {
         display: block;
-        margin: 0 auto 10px auto; /* 10px unten für Abstand zum TTT-Feld */
+        margin: 0 auto 10px auto; 
         text-align: center;
-        font-size: 1rem;         /* kleinerer Font */
+        font-size: 1rem;       
         color: #fff;
-        padding: 3px;            /* etwas schmaler Padding */
+        padding: 3px;          
         border: 1px solid #fff;
       }
 
-      /* Rahmen "Über mich" lila */
       .section {
         border: 2px solid purple !important;
         box-shadow: 0 0 10px purple !important;
       }
 
-      /* Back-Button in Lila */
       #back-btn {
         border: 2px solid purple !important;
         color: purple !important;
@@ -724,7 +701,6 @@
         background-color: #550055 !important;
       }
 
-      /* Gewinnernachricht unten drunter */
       #tic-container #ttt-message {
         position: static !important;
         margin: 10px auto 0 auto;
@@ -738,23 +714,20 @@
       }
     </style>
 
-    <!-- Punktezähler-Patch -->
     <script>
       let xWins = 0;
       let oWins = 0;
       const tttScoreboard = document.getElementById('ttt-scoreboard');
 
-      // Original checkWin
       const originalCheckWin = window.checkWin;
       window.checkWin = function() {
-        originalCheckWin(); // originale Prüfung
+        originalCheckWin(); 
         const winner = getWinner(board);
         if (winner === 'X') {
           xWins++;
         } else if (winner === 'O') {
           oWins++;
         }
-        // Scoreboard aktualisieren
         tttScoreboard.textContent = `X: ${xWins} | O: ${oWins}`;
       };
     </script>
