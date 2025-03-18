@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/terminal.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C:/Iddox/</title>
+    <script>
+      function isMobileDevice() {
+        return (
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+          (window.innerWidth <= 768)
+        );
+      }
+      
+      if (isMobileDevice()) {
+        if (!window.location.href.includes('mobile.html')) {
+          window.location.href = 'mobile.html';
+        }
+      }
+    </script>
+
+    <audio id="bg-music" controls autoplay>
+      <source src="assets/audio/music.mp3" type="audio/mpeg">
+      Ihr Browser kann dieses Tondokument nicht wiedergeben.<br>
+      Es enthält Musik. Sie können die Datei unter
+      <a href="assets/audio/music.mp3">diesem Link</a>
+      abrufen.
+    </audio>
+    
+    <script>
+      const audioElement = document.getElementById('bg-music');
+      const audioFiles = [
+        'assets/audio/music.mp3',
+        'assets/audio/music1.mp3',
+        'assets/audio/music2.mp3',
+        'assets/audio/music3.mp3',
+        'assets/audio/music4.mp3'
+      ];
+    
+      let currentTrack = 0;
+    
+      audioElement.volume = 0.2;
+      audioElement.src = audioFiles[currentTrack];
+      audioElement.play().catch((err) => {
+        console.warn("Autoplay was prevented by browser.", err);
+      });
+    
+      audioElement.addEventListener('ended', function() {
+        currentTrack++;
+        if (currentTrack >= audioFiles.length) currentTrack = 0;
+        audioElement.src = audioFiles[currentTrack];
+        audioElement.play();
+      });
+    </script>
+    <style>
+      .top-right button {
+        background-color: #200000;
+        border: 2px solid #ff0000;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        margin-left: 0.5rem;
+        font-family: 'Consolas', monospace;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+      .top-right button:hover {
+        background-color: #700000;
+      }
+      #about-btn {
+        padding: 0.5rem 1rem;
+        border: 2px solid #ff0000;
+        background: transparent;
+        color: #fff;
+        font-family: 'Consolas', monospace;
+        cursor: pointer;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        transition: background-color 0.3s ease;
+      }
+      #about-btn:hover {
+        background-color: #700000;
+      }
+      #note {
+        position: fixed;
+        top: 150px;
+        left: 20px;
+        padding: 10px;
+        width: 250px;
+        font-family: 'Consolas', monospace;
+        white-space: pre-line;
+        transform: rotate(-10deg);
+        z-index: 10;
+        background: none;
+        border: none;
+        box-shadow: none;
+      }
+      #note .text {
+        text-align: center;
+        animation: rgbText 3s infinite;
+      }
+    
+      @keyframes rgbText {
+        0%   { color: rgb(255, 0, 0); }
+        33%  { color: rgb(0, 255, 0); }
+        66%  { color: rgb(0, 0, 255); }
+        100% { color: rgb(255, 0, 0); }
+      }
+      
+      .skills {
+        display: flex;
+        gap: 20px;
+      }
+      
+      .skills img {
+        width: 32px;
+        height: 32px;
+        filter: brightness(0) invert(1); 
+      }
+    </style>
+    <style>
+      .skills img {
+        filter: none !important;
+      }
+      body {
+        overflow: auto !important;
+      }
+    </style>
+  
+  </head>
+  <body>
+    <div id="note">
+      <div class="text">
+        Notice : Type "help" in the terminal.<br>
+        Theres a few secrets, find it out! 
+        My name is Iddox Latifi:)
+      </div>
+    </div>
+    <div class="top-left">
+      <div class="skills">
+        <img src="/assets/images/kali.png" alt="Kali Linux">
+        <img src="/assets/images/py.png" alt="Python">
+        <img src="/assets/images/js.png" alt="JavaScript">
+        <img src="/assets/images/docker.png" alt="Docker">
+        <img src="/assets/images/node.png" alt="Node.js">
+      </div>
+    </div>
+  
+    <div class="top-right">
+      <button id="bruteforce-btn">BruteForce</button>
+      <button id="inject-btn">Inject Latifi</button>
+      <button id="secret-btn">Secret Page</button>
+    </div>
+  
+    <h1 class="title">Iddox Terminal</h1>
+    <div class="terminal">
+      <div class="terminal-header">Iddox@system:~$ </div>
+      <div class="terminal-input" contenteditable="true" spellcheck="false" autofocus></div>
+      <div id="terminal-output" style="color: #00ff00; margin-top: 10px; min-height: 300px;"></div>
+      <span class="cursor">_</span>
+    </div>
+    
+    <div class="social-links">
+      <a href="https://discord.gg/KcuMUUAP5T" class="social-button" target="_blank">Discord</a>
+      <a href="https://github.com/IddoxLatifi/" class="social-button" target="_blank">GitHub</a>
+    </div>
+  
+    <script src="js/script.js"></script>
+    <script src="js/tetris.js"></script>
+  
+    <div class="bottom-right">
+      <button id="about-btn">About</button>
+    </div>
+  
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const aboutBtn = document.getElementById('about-btn');
+        if (aboutBtn) {
+          aboutBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            window.open('about.html', '_blank');
+            return false; 
+          });
+        }
+        const secretBtn = document.getElementById('secret-btn');
+        if (secretBtn) {
+          secretBtn.addEventListener("click", function(e) {
+            e.preventDefault(); 
+            window.open('secret.html', '_blank');
+            return false; 
+          });
+        }
+      });
+    </script>
+  
+    <script>
+      function createLaser() {
+        const laser = document.createElement('div');
+        laser.style.position = 'fixed';
+        laser.style.width = '2px';
+        laser.style.height = '100vh';
+        laser.style.background = 'linear-gradient(to bottom, transparent, #ff0000, transparent)';
+        laser.style.left = Math.random() * window.innerWidth + 'px';
+        laser.style.opacity = '0.3';
+        laser.style.zIndex = '-1';
+        laser.style.transform = 'rotate(' + (Math.random() * 20 - 10) + 'deg)';
+        document.body.appendChild(laser);
+        const duration = 2000 + Math.random() * 2000;
+        laser.animate([{ opacity: 0.3 }, { opacity: 0 }], {
+          duration: duration,
+          easing: 'ease-out'
+        }).onfinish = () => laser.remove();
+      }
+      setInterval(createLaser, 300);
+    </script>
+  
+    <script>
+      function createCodeSnippet() {
+        const snippets = [
+          "from win32crypt import CryptUnprotectData",
+          "from cryptography.hazmat.primitives import hashes",
+          "try: threading.Thread(target=Shutd0wn).start()",
+          "def get_master_key(latifi)",
+          "if isinstance(v4r_password, str): iddox",
+          "start real_secret",
+          "const passwordChanged = async (oldpassword, newpassword, token) => {iddox}",
+          "this.setHMACKey = function (key) {"
+        ];
+        const snippet = document.createElement('div');
+        snippet.style.position = 'fixed';
+        snippet.style.fontFamily = 'monospace';
+        snippet.style.fontSize = '1rem';
+        snippet.style.color = '#00ff00';
+        snippet.style.opacity = '0.4';
+        snippet.style.pointerEvents = 'none';
+        snippet.style.whiteSpace = 'pre';
+        snippet.style.left = Math.random() * window.innerWidth + 'px';
+        snippet.style.top = '-50px';
+        snippet.textContent = snippets[Math.floor(Math.random() * snippets.length)];
+        
+        document.body.appendChild(snippet);
+        snippet.animate([
+          { transform: 'translateY(0px)', opacity: 0.4 },
+          { transform: `translateY(${window.innerHeight + 50}px)`, opacity: 0 }
+        ], {
+          duration: 6000 + Math.random() * 4000,
+          easing: 'linear'
+        }).onfinish = () => snippet.remove();
+      }
+      setInterval(createCodeSnippet, 1500);
+    </script>
+    
+    <script>
+      (function() {
+        let isNavigating = false;
+        const originalOpen = window.open;
+        window.open = function(url, target, features) {
+          if (!isNavigating) {
+            isNavigating = true;
+            setTimeout(() => { isNavigating = false; }, 0);
+            return originalOpen(url, target, features);
+          }
+          return null;
+        };
+      })();
+    </script>
+    
+    <script>
+      let adminMode = false;
+
+      function appendTerminalOutput(text) {
+        const terminalOutput = document.getElementById('terminal-output');
+        terminalOutput.innerHTML += text + "<br>";
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      }
+
+      const terminalInput = document.querySelector('.terminal-input');
+      terminalInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          const command = terminalInput.innerText.trim();
+
+          if (command === "sudo su") {
+            let adminPass = prompt("Enter admin password:");
+            if (adminPass === "latifi") {
+              adminMode = true;
+              appendTerminalOutput("Admin mode activated.");
+            } else {
+              appendTerminalOutput("Incorrect admin password.");
+            }
+          }
+          else if (command === "start real_secret") {
+            if (adminMode) {
+              let secretPass = prompt("Enter secret password:");
+              if (secretPass === "latifi") {
+                window.open("realsecret.html", "_blank");
+              } else {
+                appendTerminalOutput("Incorrect secret password.");
+              }
+            } else {
+              appendTerminalOutput("Access denied. You must enter admin mode first.");
+            }
+          }
+          else if (command === "secret") {
+            appendTerminalOutput("Iddox@localhost:~$ The secret of this website is one or more hidden HTML files. You might be able to find them by using certain commands. Try *start secret*. Maybe that will launch our secret HTML file? We might be able to see the command, along with the required password, in the background.");
+          }
+          else if (command === "help") {
+            let helpMessage = "Available commands: secret, help, sudo su";
+            if (adminMode) {
+              helpMessage += ", start real_secret";
+            }
+            appendTerminalOutput(helpMessage);
+          }
+          else {
+            appendTerminalOutput("Command not recognized.");
+          }
+          
+          terminalInput.innerText = "";
+        }
+      });
+    </script>
+  
+  </body>
+</html>

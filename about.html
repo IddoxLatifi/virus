@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C:/Iddox/README.md</title>
+
+    <audio id="bg-music" controls autoplay>
+      <source src="assets/audio/music.mp3" type="audio/mpeg">
+      Ihr Browser kann dieses Tondokument nicht wiedergeben.<br>
+      Es enthält Musik. Sie können die Datei unter
+      <a href="assets/audio/music.mp3">diesem Link</a>
+      abrufen.
+    </audio>
+
+    <script>
+      const audioElement = document.getElementById('bg-music');
+      const audioFiles = [
+        'assets/audio/music4.mp3',
+        'assets/audio/music3.mp3',
+        'assets/audio/music2.mp3',
+        'assets/audio/music1.mp3',
+        'assets/audio/music.mp3'
+      ];
+      let currentTrack = 0;
+      audioElement.volume = 0.2;
+      audioElement.src = audioFiles[currentTrack];
+      audioElement.play().catch((err) => {
+        console.warn("Autoplay was prevented by browser.", err);
+      });
+
+      audioElement.addEventListener('ended', function() {
+        currentTrack++;
+        if (currentTrack >= audioFiles.length) currentTrack = 0;
+        audioElement.src = audioFiles[currentTrack];
+        audioElement.play();
+      });
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+      :where([class^="ri-"])::before {
+        content: "\f3c2";
+      }
+      body {
+        background-color: #070707 !important;
+        color: white;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        overflow-x: hidden;
+      }
+
+      @keyframes codeSnippetFall {
+        from {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(100vh);
+          opacity: 0.3;
+        }
+      }
+      .code-snippet {
+        position: absolute;
+        color: rgba(0, 255, 0, 0.2);
+        animation: codeSnippetFall 10s linear forwards;
+        font-family: monospace;
+        pointer-events: none;
+      }
+
+      .terminal {
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid #ff0000;
+        box-shadow: 0 0 10px #ff0000;
+        padding: 1rem;
+        font-family: monospace;
+        color: #00ff00;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      @keyframes laserMove {
+        0% {
+          background-position: 100% 100%;
+        }
+        100% {
+          background-position: 0 0;
+        }
+      }
+
+      #back-btn {
+        padding: 0.5rem 1rem;
+        border: 2px solid #ff0000;
+        background: transparent;
+        color: #ff0000;
+        font-family: 'Consolas', monospace;
+        cursor: pointer;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        transition: background-color 0.3s ease;
+        border-radius: 8px;
+        z-index: 3;
+      }
+      #back-btn:hover {
+        background-color: #700000;
+      }
+
+      .content-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        overflow-y: auto;
+        width: 70%;
+        position: relative;
+        z-index: 2;
+        margin-left: 220px;
+      }
+
+      .section {
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        border: 2px solid #ff0000;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 0 10px #ff0000;
+      }
+
+      .relative {
+        position: relative;
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #ff0000;
+        border-radius: 10px;
+      }
+
+      /* Entferne Weiß-Filter bei Icons */
+      .tech-icons img {
+        width: 50px;
+        height: auto;
+        margin: 10px 0;
+        filter: none !important;
+      }
+      .tech-icons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Überschrift in RGB, p-Text weiß */
+      .section h2 {
+        animation: rgbText 3s infinite;
+      }
+      @keyframes rgbText {
+        0%   { color: #ff0000; }
+        33%  { color: #00ff00; }
+        66%  { color: #0000ff; }
+        100% { color: #ff0000; }
+      }
+      .section p {
+        color: white !important;
+        animation: none;
+      }
+
+      /* Sidebar in Lila */
+      .tech-sidebar {
+        position: fixed;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 2px solid purple;
+        box-shadow: 0 0 10px purple;
+        border-radius: 10px;
+        padding: 1rem;
+        z-index: 5;
+        width: 160px;
+        text-align: center;
+        color: purple;
+      }
+      .tech-sidebar h3 {
+        color: purple;
+        margin-bottom: 1rem;
+      }
+
+      #gameContainer {
+        border: 5px solid white;
+        opacity: 0.9;
+      }
+      #paddle1, #paddle2 {
+        border: 2px solid red;
+        box-shadow: 0 0 10px red;
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+      #ball {
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+
+      #laser-container {
+        display: none;
+      }
+
+      /* TicTacToe Standard-Styles (werden unten überschrieben/ergänzt) */
+      #tic-tac-toe {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 250px;
+        height: 250px;
+        background: rgba(0,0,0,0.9);
+        border: 2px solid #fff;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .tic-cell {
+        width: 33.33%;
+        height: 33.33%;
+        border: 1px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #ff0000;
+        cursor: pointer;
+      }
+
+      /* Gewinner-Nachricht */
+      #ttt-message {
+        position: absolute;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: #ff0000;
+        border: 2px solid #ff0000;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-size: 1.2rem;
+        display: none;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen">
+    <div id="laser-container"></div>
+    <div
+      id="background-code"
+      class="fixed inset-0 overflow-hidden pointer-events-none"
+      style="z-index:1;"
+    ></div>
+
+    <!-- Sidebar -->
+    <div class="tech-sidebar">
+      <h3 class="text-xl font-bold mb-2">My Techs</h3>
+      <div class="tech-icons">
+        <img src="assets/images/py.png" alt="Python" />
+        <img src="assets/images/js.png" alt="JavaScript" />
+        <img src="assets/images/docker.png" alt="Docker" />
+        <img src="assets/images/kali.png" alt="Kali Linux" />
+        <img src="assets/images/node.png" alt="Node.js" />
+      </div>
+    </div>
+
+
+    <!-- Container für TicTacToe -->
+    <div id="tic-container">
+      <p id="ttt-notice">
+        Try to hit my Tic-Tac-Toe System, i bet you never beat them :P
+      </p>
+      <div id="ttt-scoreboard">X: 0 | O: 0</div>
+
+      <!-- TTT-Feld + Meldung -->
+      <div id="tic-tac-toe"></div>
+      <div id="ttt-message"></div>
+      <div id="ttt-message" style="display:none;"></div>
+    </div>
+
+    <div class="content-container">
+      <!-- Über mich -->
+      <div class="section">
+        <h2 class="text-3xl font-bold mb-4">Über mich</h2>
+        <p class="text-lg">
+          Hey! I'm Iddox. I'm a passionate developer of smaller programs, full stack, front-end, and Discord bots.
+          In addition to programs like my dds-png converter, I've also written other innovative programs, including those for securing
+          network connections. I doo a few small Discord Bots, Converter and some small Python GUI Programms, a few HTML, css and js Websites
+          and a few other thinks. 
+          <a href="https://iddox.tech/contact.html">Just write to me</a> if you're interested in something unique; we're sure to find a solution!
+        </p>
+      </div>
+
+      <!-- Ping Pong Game -->
+      <div
+        class="relative bg-black rounded-lg shadow-lg overflow-hidden"
+        style="height: 400px"
+        id="gameContainer"
+      >
+        <div
+          class="absolute top-4 left-1/2 transform -translate-x-1/2 text-white text-xl"
+          id="score"
+        >
+          0 : 0
+        </div>
+        <div class="absolute left-4 w-4 h-20" id="paddle1"></div>
+        <div class="absolute right-4 w-4 h-20" id="paddle2"></div>
+        <div class="absolute w-4 h-4 rounded-full" id="ball"></div>
+      </div>
+
+      <!-- Back Button -->
+      <div class="fixed top-10 left-10">
+        <button
+          id="back-btn"
+          onclick="window.open('index.html', '_blank'); return false;"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+
+    <!-- Ping Pong Script -->
+    <script>
+      let ball = document.getElementById("ball");
+      let paddle1 = document.getElementById("paddle1");
+      let paddle2 = document.getElementById("paddle2");
+      let score = document.getElementById("score");
+
+      let ballSpeedX = 0.6;
+      let ballSpeedY = 0.6;
+      let ballPosX = 50;
+      let ballPosY = 50;
+      let paddle1Pos = 50;
+      let paddle2Pos = 50;
+      let score1 = 0;
+      let score2 = 0;
+
+      function moveBall() {
+        ballPosX += ballSpeedX;
+        ballPosY += ballSpeedY;
+
+        // oben/unten
+        if (ballPosY <= 0 || ballPosY >= 96) {
+          ballSpeedY = -ballSpeedY;
+          ballSpeedX += (Math.random() - 0.5) * 0.1;
+          ballSpeedY += (Math.random() - 0.5) * 0.1;
+        }
+
+        // links/rechts -> Paddles
+        if (ballPosX <= 4 && ballPosY > paddle1Pos && ballPosY < paddle1Pos + 20) {
+          ballSpeedX = -ballSpeedX;
+          increaseBallSpeed();
+          ballPosX = 4;
+          ballSpeedX += (Math.random() - 0.5) * 0.2;
+          ballSpeedY += (Math.random() - 0.5) * 0.2;
+        }
+        if (ballPosX >= 96 && ballPosY > paddle2Pos && ballPosY < paddle2Pos + 20) {
+          ballSpeedX = -ballSpeedX;
+          increaseBallSpeed();
+          ballPosX = 96;
+          ballSpeedX += (Math.random() - 0.5) * 0.2;
+          ballSpeedY += (Math.random() - 0.5) * 0.2;
+        }
+
+        // Punktevergabe
+        if (ballPosX <= 0) {
+          score2++;
+          resetBall();
+        }
+        if (ballPosX >= 100) {
+          score1++;
+          resetBall();
+        }
+
+        ball.style.left = ballPosX + "%";
+        ball.style.top = ballPosY + "%";
+        score.textContent = `${score1} : ${score2}`;
+      }
+
+      function resetBall() {
+        ballPosX = 50;
+        ballPosY = 50;
+        // random direction
+        ballSpeedX = Math.random() > 0.5 ? 0.6 : -0.6;
+        ballSpeedY = 0.6 * (Math.random() > 0.5 ? 1 : -1);
+      }
+
+      function increaseBallSpeed() {
+        ballSpeedX *= 1.05;
+        ballSpeedY *= 1.05;
+      }
+
+      function movePaddles() {
+        paddle1.style.top = paddle1Pos + "%";
+        paddle2.style.top = paddle2Pos + "%";
+      }
+
+      document.addEventListener("mousemove", function (event) {
+        let container = document.getElementById("gameContainer");
+        let containerRect = container.getBoundingClientRect();
+        let mouseY = event.clientY - containerRect.top;
+        paddle1Pos = ((mouseY - 10) / containerRect.height) * 100;
+        if (paddle1Pos < 0) paddle1Pos = 0;
+        if (paddle1Pos > 80) paddle1Pos = 80;
+      });
+
+      // KI (Bewegt sich einfach zum Ball)
+      function moveBot() {
+        if (ballPosY < paddle2Pos + 10) {
+          paddle2Pos -= 0.8;
+        } else if (ballPosY > paddle2Pos + 10) {
+          paddle2Pos += 0.8;
+        }
+        if (paddle2Pos < 0) paddle2Pos = 0;
+        if (paddle2Pos > 80) paddle2Pos = 80;
+      }
+
+      function gameLoop() {
+        moveBall();
+        movePaddles();
+        moveBot();
+        requestAnimationFrame(gameLoop);
+      }
+      gameLoop();
+    </script>
+
+    <!-- Code-Snippet Effekt -->
+    <script>
+      function createCodeSnippet() {
+        const snippet = document.createElement("div");
+        snippet.className = "code-snippet";
+        snippet.textContent = "console.log('Hello, World!')";
+        snippet.style.left = Math.random() * 100 + "%";
+        snippet.style.top = "-50px";
+        snippet.style.fontSize = (Math.random() * 10 + 12) + "px";
+        document.getElementById("background-code").appendChild(snippet);
+        setTimeout(() => snippet.remove(), 10000);
+      }
+      setInterval(createCodeSnippet, 1000);
+    </script>
+
+    <!-- Laser-Effekt -->
+    <script>
+      function createLaser() {
+        const laser = document.createElement('div');
+        laser.style.position = 'fixed';
+        laser.style.width = '2px';
+        laser.style.height = '100vh';
+        laser.style.background = 'linear-gradient(to bottom, transparent, purple, transparent)';
+        laser.style.left = Math.random() * window.innerWidth + 'px';
+        laser.style.top = '0';
+        laser.style.opacity = '0.3';
+        laser.style.zIndex = '-1';
+        laser.style.transform = 'rotate(' + (Math.random() * 20 - 10) + 'deg)';
+        document.body.appendChild(laser);
+        const duration = 2000 + Math.random() * 2000;
+        laser.animate([{ opacity: 0.3 }, { opacity: 0 }], {
+          duration: duration,
+          easing: 'ease-out'
+        }).onfinish = () => laser.remove();
+      }
+      setInterval(createLaser, 300);
+    </script>
+
+    <!-- Alt-Code-Schnipsel -->
+    <script>
+      function createCodeSnippetAlt() {
+        const snippets = [
+          "from win32crypt import CryptUnprotectData",
+          "from cryptography.hazmat.primitives import hashes",
+          "try: threading.Thread(target=Shutd0wn).start()",
+          "def get_master_key(iddox)",
+          "if isinstance(v4r_password, str): iddox",
+          "def get_cookies('Network', 'Cookies')",
+          "const passwordChanged = async (oldpassword, newpassword, token) => {iddox}",
+          "this.setHMACKey = function (key) {"
+        ];
+        const snippet = document.createElement('div');
+        snippet.style.position = 'fixed';
+        snippet.style.fontFamily = 'monospace';
+        snippet.style.fontSize = '1rem';
+        snippet.style.color = '#00ff00';
+        snippet.style.opacity = '0.4';
+        snippet.style.pointerEvents = 'none';
+        snippet.style.whiteSpace = 'pre';
+        snippet.style.left = Math.random() * window.innerWidth + 'px';
+        snippet.style.top = '-50px';
+        snippet.textContent = snippets[Math.floor(Math.random() * snippets.length)];
+
+        document.body.appendChild(snippet);
+        snippet.animate([
+          { transform: 'translateY(0px)', opacity: 0.4 },
+          { transform: `translateY(${window.innerHeight + 50}px)`, opacity: 0 }
+        ], {
+          duration: 6000 + Math.random() * 4000,
+          easing: 'linear'
+        }).onfinish = () => snippet.remove();
+      }
+      setInterval(createCodeSnippetAlt, 1500);
+    </script>
+
+    <!-- Original TicTacToe Script -->
+    <script>
+      // Minimal TicTacToe: User = 'X', Computer = 'O'
+      const ticTacToeContainer = document.getElementById('tic-tac-toe');
+      const tttMessage = document.getElementById('ttt-message');
+      let ticCells = [];
+      let board = Array(9).fill(null); // 3x3
+      let currentPlayer = 'X'; // Start: Nutzer
+
+      // 9 Zellen erstellen
+      for (let i = 0; i < 9; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('tic-cell');
+        cell.addEventListener('click', () => handleTurn(i));
+        ticTacToeContainer.appendChild(cell);
+        ticCells.push(cell);
+      }
+
+      // Spielerzug (X)
+      function handleTurn(idx) {
+        if (board[idx] !== null || currentPlayer !== 'X') return;
+        board[idx] = 'X';
+        ticCells[idx].textContent = 'X';
+
+        checkWin();
+        currentPlayer = 'O';
+
+        // Computerzug mit leichter Verzögerung
+        setTimeout(computerMove, 500);
+      }
+
+      // Computerzug (O) - Minimax
+      function computerMove() {
+        if (board.includes(null)) {
+          const moveIndex = bestMove();
+          if (moveIndex !== null) {
+            board[moveIndex] = 'O';
+            ticCells[moveIndex].textContent = 'O';
+          }
+          checkWin();
+          currentPlayer = 'X';
+        }
+      }
+
+      function bestMove() {
+        let bestVal = -Infinity;
+        let move = null;
+
+        for (let i = 0; i < board.length; i++) {
+          if (board[i] === null) {
+            board[i] = 'O';
+            const score = minimax(board, 0, false);
+            board[i] = null;
+            if (score > bestVal) {
+              bestVal = score;
+              move = i;
+            }
+          }
+        }
+        return move;
+      }
+
+      function minimax(newBoard, depth, isMaximizing) {
+        const winner = getWinner(newBoard);
+        if (winner !== null) {
+          if (winner === 'O') return 10 - depth;
+          if (winner === 'X') return depth - 10;
+          if (winner === 'tie') return 0;
+        }
+
+        if (isMaximizing) {
+          let bestScore = -Infinity;
+          for (let i = 0; i < newBoard.length; i++) {
+            if (newBoard[i] === null) {
+              newBoard[i] = 'O';
+              let score = minimax(newBoard, depth + 1, false);
+              newBoard[i] = null;
+              bestScore = Math.max(score, bestScore);
+            }
+          }
+          return bestScore;
+        } else {
+          let bestScore = Infinity;
+          for (let i = 0; i < newBoard.length; i++) {
+            if (newBoard[i] === null) {
+              newBoard[i] = 'X';
+              let score = minimax(newBoard, depth + 1, true);
+              newBoard[i] = null;
+              bestScore = Math.min(score, bestScore);
+            }
+          }
+          return bestScore;
+        }
+      }
+
+      function getWinner(testBoard) {
+        const wins = [
+          [0,1,2],[3,4,5],[6,7,8],
+          [0,3,6],[1,4,7],[2,5,8],
+          [0,4,8],[2,4,6]
+        ];
+
+        for (let combo of wins) {
+          const [a,b,c] = combo;
+          if (testBoard[a] && testBoard[a] === testBoard[b] && testBoard[b] === testBoard[c]) {
+            return testBoard[a];
+          }
+        }
+        if (!testBoard.includes(null)) {
+          return 'tie';
+        }
+        return null;
+      }
+
+      function checkWin() {
+        const wins = [
+          [0,1,2],[3,4,5],[6,7,8],
+          [0,3,6],[1,4,7],[2,5,8],
+          [0,4,8],[2,4,6]
+        ];
+        for (let combo of wins) {
+          const [a,b,c] = combo;
+          if (board[a] && board[a] === board[b] && board[b] === board[c]) {
+            showTTTMessage(`${board[a]} hat gewonnen!`);
+            setTimeout(() => resetTicTacToe(), 1000);
+            return;
+          }
+        }
+        if (!board.includes(null)) {
+          showTTTMessage('Unentschieden!');
+          setTimeout(() => resetTicTacToe(), 1000);
+        }
+      }
+
+      function showTTTMessage(msg) {
+        tttMessage.textContent = msg;
+        tttMessage.style.display = 'block';
+        setTimeout(() => {
+          tttMessage.style.display = 'none';
+        }, 1000);
+      }
+
+      function resetTicTacToe() {
+        board = Array(9).fill(null);
+        ticCells.forEach(cell => cell.textContent = '');
+        currentPlayer = 'X';
+      }
+    </script>
+
+    <!-- Zusätzliche Anpassungen -->
+    <style>
+      /* Container höher setzen (statt top:50%) => top:40%, transformY(-40%) */
+      #tic-container {
+        position: absolute;
+        right: 20px;
+        top: 40%;            /* weiter oben */
+        transform: translateY(-40%);  /* passt zur top-Angabe */
+        width: 300px;
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid #fff;
+        padding: 10px;
+        text-align: center;
+      }
+
+      /* Tic-Tac-Toe Kästchen in Lila */
+      #tic-container #tic-tac-toe .tic-cell {
+        border: 1px solid purple !important;
+        color: #ff0000; 
+      }
+
+      /* Notiz (leicht geneigt, aber gut lesbar) */
+      #ttt-notice {
+        text-align: center;
+        font-style: oblique;
+        transform: rotate(-2deg); /* Weniger stark geneigt */
+        color: #fff;
+        margin-bottom: 350px;
+      }
+
+      /* Scoreboard etwas kleiner */
+      #ttt-scoreboard {
+        display: block;
+        margin: 0 auto 10px auto; /* 10px unten für Abstand zum TTT-Feld */
+        text-align: center;
+        font-size: 1rem;         /* kleinerer Font */
+        color: #fff;
+        padding: 3px;            /* etwas schmaler Padding */
+        border: 1px solid #fff;
+      }
+
+      /* Rahmen "Über mich" lila */
+      .section {
+        border: 2px solid purple !important;
+        box-shadow: 0 0 10px purple !important;
+      }
+
+      /* Back-Button in Lila */
+      #back-btn {
+        border: 2px solid purple !important;
+        color: purple !important;
+      }
+      #back-btn:hover {
+        background-color: #550055 !important;
+      }
+
+      /* Gewinnernachricht unten drunter */
+      #tic-container #ttt-message {
+        position: static !important;
+        margin: 10px auto 0 auto;
+        background: rgba(0, 0, 0, 0.7);
+        color: #ff0000;
+        border: 5px solid #ff0000;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-size: 1.2rem;
+        display: none;
+      }
+    </style>
+
+    <!-- Punktezähler-Patch -->
+    <script>
+      let xWins = 0;
+      let oWins = 0;
+      const tttScoreboard = document.getElementById('ttt-scoreboard');
+
+      // Original checkWin
+      const originalCheckWin = window.checkWin;
+      window.checkWin = function() {
+        originalCheckWin(); // originale Prüfung
+        const winner = getWinner(board);
+        if (winner === 'X') {
+          xWins++;
+        } else if (winner === 'O') {
+          oWins++;
+        }
+        // Scoreboard aktualisieren
+        tttScoreboard.textContent = `X: ${xWins} | O: ${oWins}`;
+      };
+    </script>
+  </body>
+</html>

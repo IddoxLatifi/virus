@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C:/Iddox/mobile.md</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  
+  <style>
+    body {
+      background-color: #070707;
+      color: white;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes codeSnippetFall {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(100vh);
+        opacity: 0.3;
+      }
+    }
+    .code-snippet {
+      position: absolute;
+      color: rgba(0, 255, 0, 0.2);
+      animation: codeSnippetFall 10s linear forwards;
+      font-family: monospace;
+      pointer-events: none;
+    }
+
+    .content-container {
+      width: 100%;
+      max-width: 280px; 
+      margin: 0 auto;
+      padding: 1rem;
+      overflow-y: auto;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .section {
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      border: 2px solid purple;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 10px purple;
+      width: 100%;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #ff0000;
+      border-radius: 10px;
+    }
+    @keyframes rgbText {
+      0%   { color: #ff0000; }
+      33%  { color: #00ff00; }
+      66%  { color: #0000ff; }
+      100% { color: #ff0000; }
+    }
+    .section h2 {
+      animation: rgbText 3s infinite;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .section p {
+      color: white;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .section a {
+      color: #ff0000;
+      text-decoration: none;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+    .section a:hover {
+      color: #ff6666;
+      text-shadow: 0 0 5px #ff0000;
+    }
+
+    #tic-container {
+      background: rgba(0,0,0,0.9);
+      border: 2px solid #fff;
+      padding: 15px;
+      text-align: center;
+      margin: 0 auto 20px auto;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+    #tic-tac-toe {
+      width: 250px;
+      height: 250px;
+      background: rgba(0,0,0,0.9);
+      border: 2px solid #fff;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      margin: 0 auto;
+    }
+    .tic-cell {
+      border: 1px solid purple;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #ff0000;
+      cursor: pointer;
+      aspect-ratio: 1/1;
+    }
+    #ttt-notice {
+      text-align: center;
+      font-style: italic;
+      transform: rotate(-2deg);
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    #ttt-scoreboard {
+      display: block;
+      margin: 0 auto 10px auto;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #fff;
+      padding: 3px;
+      border: 1px solid #fff;
+    }
+    #ttt-message {
+      margin-top: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #ff0000;
+      border: 2px solid #ff0000;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+      display: none;
+    }
+
+    .laser {
+      position: fixed;
+      width: 2px;
+      height: 100vh;
+      background: linear-gradient(to bottom, transparent, purple, transparent);
+      top: 0;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    #background-code {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="laser-container"></div>
+  <div id="background-code"></div>
+  <div class="content-container">
+    <div class="section">
+      <h2>About me</h2>
+      <p>
+        Hey! I'm Iddox. I'm a passionate developer of smaller programs, full stack, front-end, and Discord bots.
+        In addition to programs like my dds-png converter, I've also written other innovative programs, including those for securing
+        network connections. You were automatically redirected to this page because you're trying to access my domain with a mobile device.
+        Unfortunately, that's not possible! :( Why don't you access the domain again from your PC?! :)
+        <a href="https://iddox.tech/contact.html">Just write to me</a> if you're interested in something unique; we're sure to find a solution!
+      </p>
+    </div>
+    <div id="tic-container">
+      <p id="ttt-notice">
+        Try to hit my Tic-Tac-Toe System, i bet you never beat them :P
+      </p>
+      <div id="ttt-scoreboard">X: 0 | O: 0</div>
+      <div id="tic-tac-toe"></div>
+      <div id="ttt-message"></div>
+    </div>
+  </div>
+  <script>
+    const ticTacToeContainer = document.getElementById('tic-tac-toe');
+    const tttMessage = document.getElementById('ttt-message');
+    const tttScoreboard = document.getElementById('ttt-scoreboard');
+    let ticCells = [];
+    let board = Array(9).fill(null); 
+    let currentPlayer = 'X'; 
+    let xWins = 0;
+    let oWins = 0;
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('tic-cell');
+      cell.addEventListener('click', () => handleTurn(i));
+      ticTacToeContainer.appendChild(cell);
+      ticCells.push(cell);
+    }
+    function handleTurn(idx) {
+      if (board[idx] !== null || currentPlayer !== 'X') return;
+      board[idx] = 'X';
+      ticCells[idx].textContent = 'X';
+
+      const winner = getWinner(board);
+      if (winner) {
+        handleWinner(winner);
+      } else {
+        currentPlayer = 'O';
+        setTimeout(computerMove, 500);
+      }
+    }
+
+    function computerMove() {
+      if (!board.includes(null)) return;
+      
+      const moveIndex = bestMove();
+      if (moveIndex !== null) {
+        board[moveIndex] = 'O';
+        ticCells[moveIndex].textContent = 'O';
+        
+        const winner = getWinner(board);
+        if (winner) {
+          handleWinner(winner);
+        } else {
+          currentPlayer = 'X';
+        }
+      }
+    }
+
+    function bestMove() {
+      let bestVal = -Infinity;
+      let move = null;
+
+      for (let i = 0; i < board.length; i++) {
+        if (board[i] === null) {
+          board[i] = 'O';
+          const score = minimax(board, 0, false);
+          board[i] = null;
+          if (score > bestVal) {
+            bestVal = score;
+            move = i;
+          }
+        }
+      }
+      return move;
+    }
+
+    function minimax(newBoard, depth, isMaximizing) {
+      const winner = getWinner(newBoard);
+      if (winner !== null) {
+        if (winner === 'O') return 10 - depth;
+        if (winner === 'X') return depth - 10;
+        if (winner === 'tie') return 0;
+      }
+
+      if (isMaximizing) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < newBoard.length; i++) {
+          if (newBoard[i] === null) {
+            newBoard[i] = 'O';
+            let score = minimax(newBoard, depth + 1, false);
+            newBoard[i] = null;
+            bestScore = Math.max(score, bestScore);
+          }
+        }
+        return bestScore;
+      } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < newBoard.length; i++) {
+          if (newBoard[i] === null) {
+            newBoard[i] = 'X';
+            let score = minimax(newBoard, depth + 1, true);
+            newBoard[i] = null;
+            bestScore = Math.min(score, bestScore);
+          }
+        }
+        return bestScore;
+      }
+    }
+
+    function getWinner(testBoard) {
+      const wins = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+
+      for (let combo of wins) {
+        const [a,b,c] = combo;
+        if (testBoard[a] && testBoard[a] === testBoard[b] && testBoard[b] === testBoard[c]) {
+          return testBoard[a];
+        }
+      }
+      if (!testBoard.includes(null)) {
+        return 'tie';
+      }
+      return null;
+    }
+
+    function handleWinner(winner) {
+      if (winner === 'X') {
+        xWins++;
+        showTTTMessage(`${winner} hat gewonnen!`);
+      } else if (winner === 'O') {
+        oWins++;
+        showTTTMessage(`${winner} hat gewonnen!`);
+      } else if (winner === 'tie') {
+        showTTTMessage('Unentschieden!');
+      }
+      
+      tttScoreboard.textContent = `X: ${xWins} | O: ${oWins}`;
+    
+      setTimeout(resetTicTacToe, 1000);
+    }
+
+    function showTTTMessage(msg) {
+      tttMessage.textContent = msg;
+      tttMessage.style.display = 'block';
+      setTimeout(() => {
+        tttMessage.style.display = 'none';
+      }, 1000);
+    }
+
+    function resetTicTacToe() {
+      board = Array(9).fill(null);
+      ticCells.forEach(cell => cell.textContent = '');
+      currentPlayer = 'X';
+    }
+
+    function createCodeSnippet() {
+      const snippet = document.createElement("div");
+      snippet.className = "code-snippet";
+      snippet.textContent = "console.log('Hello, World!')";
+      snippet.style.left = Math.random() * 100 + "%";
+      snippet.style.top = "-50px";
+      snippet.style.fontSize = (Math.random() * 10 + 12) + "px";
+      document.getElementById("background-code").appendChild(snippet);
+      setTimeout(() => snippet.remove(), 10000);
+    }
+    setInterval(createCodeSnippet, 1000);
+
+    function createCodeSnippetAlt() {
+      const snippets = [
+        "from win32crypt import CryptUnprotectData",
+        "from cryptography.hazmat.primitives import hashes",
+        "try: threading.Thread(target=Shutd0wn).start()",
+        "def get_master_key(iddox)",
+        "if isinstance(v4r_password, str): iddox",
+        "def get_cookies('Network', 'Cookies')",
+        "const passwordChanged = async (oldpassword, newpassword, token) => {iddox}",
+        "this.setHMACKey = function (key) {"
+      ];
+      const snippet = document.createElement('div');
+      snippet.style.position = 'fixed';
+      snippet.style.fontFamily = 'monospace';
+      snippet.style.fontSize = '1rem';
+      snippet.style.color = '#00ff00';
+      snippet.style.opacity = '0.4';
+      snippet.style.pointerEvents = 'none';
+      snippet.style.whiteSpace = 'pre';
+      snippet.style.left = Math.random() * window.innerWidth + 'px';
+      snippet.style.top = '-50px';
+      snippet.textContent = snippets[Math.floor(Math.random() * snippets.length)];
+
+      document.body.appendChild(snippet);
+      snippet.animate([
+        { transform: 'translateY(0px)', opacity: 0.4 },
+        { transform: `translateY(${window.innerHeight + 50}px)`, opacity: 0 }
+      ], {
+        duration: 6000 + Math.random() * 4000,
+        easing: 'linear'
+      }).onfinish = () => snippet.remove();
+    }
+    setInterval(createCodeSnippetAlt, 1500);
+
+    function createLaser() {
+      const laser = document.createElement('div');
+      laser.className = 'laser';
+      laser.style.left = Math.random() * window.innerWidth + 'px';
+      laser.style.transform = 'rotate(' + (Math.random() * 20 - 10) + 'deg)';
+      document.body.appendChild(laser);
+      
+      setTimeout(() => {
+        laser.style.opacity = '0';
+        setTimeout(() => laser.remove(), 2000);
+      }, 2000);
+    }
+    setInterval(createLaser, 300);
+  </script>
+</body>
+</html>

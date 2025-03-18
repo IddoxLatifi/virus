@@ -1,0 +1,269 @@
+/* Das Crypto-Fenster – standardmäßig im Hintergrund (z-index: 1500, also unter den Buttons mit 3000) */
+#cryptoModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hauptcontainer - kleiner machen */
+#cryptoModal {
+  background: #222;
+  border: 2px solid #ff0000;
+  border-radius: 10px;
+  padding: 15px;
+  width: 80%;
+  max-width: 800px; /* Reduzierte maximale Breite */
+  box-shadow: 0 0 15px #ff0000;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  max-height: 80vh; /* Reduzierte maximale Höhe */
+  overflow: hidden; /* Verhindert Scrolling des Hauptfensters */
+}
+
+/* Header ohne Cursor:move, da nicht mehr verschiebbar */
+#cryptoModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ff0000;
+}
+
+#cryptoModalHeader h2 {
+  margin: 0;
+  color: #ff0000;
+  font-size: 1.3em; /* Kleinere Überschrift */
+}
+
+
+
+/* Unterteilung in zwei Spalten - kompakter */
+#cryptoMain {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  height: auto; /* Automatische Höhe statt fester Höhe */
+}
+
+@media (max-width: 768px) {
+  #cryptoMain {
+    flex-direction: column;
+  }
+}
+
+#cryptoLeft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Die rechte Spalte etwas nach rechts verschieben */
+#cryptoRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 50px; /* <-- Neu hinzugefügt, verschiebt die rechte Spalte nach rechts */
+}
+
+/* Allgemeine Überschriften */
+#cryptoModal h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #ff0000;
+}
+
+/* Textarea und Input-Felder - kleiner */
+#cryptoCodeInput {
+  width: 100%;
+  height: 100px; /* Reduzierte Höhe */
+  padding: 8px;
+  border: 1px solid #ff0000;
+  border-radius: 5px;
+  background: #111;
+  color: #eee;
+  resize: vertical;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+/* Noch kleinere Key-Eingabefelder */
+.crypto-key-input {
+  width: 100%;
+  padding: 2px;
+  border: 1px solid #ff0000;
+  border-radius: 1px;
+  background: #111;
+  color: #eee;
+  margin-bottom: 4px;
+  font-size: 0.85em;
+  height: 14px; /* Weiter reduzierte Höhe */
+}
+
+#cryptoTitle {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ff0000;
+  border-radius: 5px;
+  background: #111;
+  color: #eee;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  height: 32px;
+}
+
+/* Upload-Bereiche */
+.crypto-upload-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.crypto-upload-section label {
+  width: 80px;
+  color: #eee;
+}
+
+.crypto-upload-section input[type="file"] {
+  flex: 1;
+  background: #111;
+  color: #eee;
+  border: 1px solid #ff0000;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+/* Kleinere Buttons */
+.crypto-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.crypto-buttons button {
+  padding: 8px 15px;
+  border: 1px solid #ff0000;
+  background: #222;
+  color: #ff0000;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-size: 0.9em;
+}
+
+.crypto-buttons button:hover {
+  background: #333;
+  box-shadow: 0 0 10px #ff0000;
+}
+
+/* Container für Ausgabe-Items – scrollbar */
+.crypto-output-container {
+  max-height: 150px; /* Reduzierte Höhe */
+  overflow-y: auto;
+  background: #111;
+  border: 1px solid #ff0000;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+/* Einzelnes Ausgabe-Item */
+.crypto-output-item {
+  border-bottom: 1px solid #333;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.crypto-output-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ff0000;
+}
+
+.crypto-output-text {
+  width: 100%;
+  height: 80px;
+  resize: vertical;
+  background: #000;
+  color: #00ff00;
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 5px;
+  overflow-y: auto;
+  margin-bottom: 5px;
+  font-family: monospace;
+}
+
+.crypto-download-btn {
+  padding: 5px 10px;
+  border: 1px solid #ff0000;
+  background: #222;
+  color: #ff0000;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.crypto-download-btn:hover {
+  background: #333;
+  box-shadow: 0 0 5px #ff0000;
+}
+
+/* Beschreibungsfeld unten - kompakter */
+#cryptoDescriptionSection {
+  margin-top: 15px;
+  border-top: 1px solid #ff0000;
+  padding-top: 10px;
+}
+
+textarea {
+  background-color: #f1f1f1; /* Standard Hintergrund für andere Textareas */
+  color: #000;                /* Textfarbe schwarz für andere Textareas */
+  border: 1px solid #ccc;     /* Standard Rahmen */
+  padding: 10px;              /* Polsterung */
+  font-size: 16px;            /* Schriftgröße */
+  width: 100%;                /* Breite */
+  min-height: 120px;          /* Mindesthöhe */
+  box-sizing: border-box;     /* Box-Modell */
+}
+
+/* Styling für das Eingabefeld für das Entschlüsseln von Bilddaten */
+#cryptoImageDecryptInput {
+  background-color: #f1f1f1; /* Gleicher Hintergrund wie das andere Eingabefeld */
+  border: 1px solid #ccc;     /* Gleiche Rahmenfarbe */
+  padding: 10px;              /* Gleiche Polsterung */
+  font-size: 16px;            /* Gleiche Schriftgröße */
+  width: 80%;                /* Gleiche Breite */
+  min-height: 120px;          /* Gleiche Mindesthöhe wie das andere Textarea */
+  box-sizing: border-box;     /* Box-Modell berücksichtigen */
+}
+#cryptoDescription {
+  width: 100%;
+  min-height: 60px; /* Reduzierte Höhe */
+  padding: 8px;
+  border: 1px solid #ff0000;
+  border-radius: 5px;
+  background: #111;
+  color: #eee;
+  resize: vertical;
+  line-height: 1.4;
+  font-size: 0.9em;
+}
+
+/* Abschnitte im rechten Bereich - kompakter */
+#cryptoFileSection,
+#cryptoImageSection {
+  background: rgba(255, 0, 0, 0.05);
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
