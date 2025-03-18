@@ -347,8 +347,25 @@
     function resetTicTacToe() {
       board = Array(9).fill(null);
       ticCells.forEach(cell => cell.textContent = '');
-      currentPlayer = 'X';
+      // Ursprünglich: currentPlayer = 'X';
+      // Neuer Code: setze currentPlayer basierend auf dem gewählten Startmodus
+      if(startingMode === 'bot') {
+        currentPlayer = 'O';
+        setTimeout(computerMove, 500);
+      } else {
+        currentPlayer = 'X';
+      }
     }
+
+    // Neue Funktion, um das Spiel mit einem bestimmten Startmodus zu starten.
+    // Parameter mode: 'human' oder 'bot'
+    function startGame(mode) {
+      startingMode = mode;
+      resetTicTacToe();
+    }
+
+    // Beispiel: Spielstart mit menschlichem Spieler (kann in der Konsole oder per Button geändert werden)
+    startGame('human');
 
     function createCodeSnippet() {
       const snippet = document.createElement("div");
