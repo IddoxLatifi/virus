@@ -191,7 +191,37 @@ body {
   transform: rotate(-1deg);
   text-align: center;
 }
+.visitor-counter {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid #ff0000;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+  top: 740px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  font-family: 'Consolas', monospace;
+}
 
+.counter-icon {
+  color: #ff0000;
+  font-size: 1.2rem;
+}
+
+.counter-text {
+  color: #ffffff;
+}
+
+#visitor-count {
+  color: #00ff00;
+  font-weight: bold;
+  margin-left: 5px;
+}
 @keyframes laserMove {
   0% {
     background-position: 100% 100%;
